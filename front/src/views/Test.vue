@@ -1,17 +1,18 @@
 <template>
   <div class="container" style="background-color: white;">
-    <h1>测试版1</h1>
+    <h1 style="margin-top: 40px;">{{ displayTitle }}识别</h1>
     <div class="button-group">
-      <button @click="clearSelectedImage">清除图片</button>
-      <input type="file" @change="onFileChange" accept="image/*" style="display: none;">
-      <button @click="triggerFileInput">选择文件</button>
-      <button @click="submitImage">提交图片</button>
+      <button @click="clearSelectedMedia">{{ currentMode === 'image'? '清除图片' : '清除视频' }}</button>
+      <input type="file" @change="onFileChange" :accept="currentMode === 'image'? 'image/*' : 'video/*'" style="display: none;" ref="fileInput">
+      <button @click="triggerFileInput">{{ currentMode === 'image'? '选择文件' : '选择视频文件' }}</button>
+      <button @click="submitMedia">{{ currentMode === 'image'? '提交图片' : '提交视频' }}</button>
       <button @click="showHistoryMessage">历史记录</button>
       <button @click="showModeSwitchMessage">切换模式</button>
       <button @click="showProcessDemoMessage">流程演示</button>
-      <button @click="saveProcessedImage">保存图片</button>
+      <button @click="saveProcessedMedia">{{ currentMode === 'image'? '保存图片' : '保存视频' }}</button>
     </div>
-    <div class="image-container">
+    <div style="margin-top: 20px;"></div>
+    <div v-if="currentMode === 'image'" class="image-media-container">
       <div class="original-image" :style="{ width: '80vw', height: '70vh', marginLeft: '5vw', backgroundColor: '#eee', border: '5px solid black', borderRadius: '10px' }">
         <img v-if="previewImageUrl" :src="previewImageUrl" alt="Original Image" :style="originalImageStyle">
       </div>
@@ -19,7 +20,19 @@
         <img v-if="processedImageUrl" :src="processedImageUrl" alt="Processed Image" :style="processedImageStyle">
       </div>
     </div>
-  </div>
+    <div v-if="currentMode === 'video'" style="margin-top: 20px;"></div>
+    <div v-if="currentMode === 'video'" class="video-media-container">
+      <div class="original-video" :style="{ width: '40vw', height: '35vh', marginLeft: '5vw', backgroundColor: '#eee', border: '5px solid black', borderRadius: '10px' }">
+        <video v-if="previewVideoUrl" :src="previewVideoUrl" controls></video>
+      </div>
+      <div class="processed-video" :style="{ width: '40vw', height: '35vh', marginRight: '5vw', backgroundColor: '#ddd', border: '5px solid black', borderRadius: '10px' }">
+        <video v-if="processedVideoUrl" :src="processedVideoUrl" controls></video>
+        <div v-if="videoProcessing" class="loading-overlay">
+          <p>视频处理中，请稍候...</p>
+        </div>
+      </div>
+    </div> <!-- <-- 这里添加了缺失的闭合 div -->
+  </div> <!-- <-- 这里添加了缺失的闭合 div -->
 </template>
 
 <script>
@@ -30,9 +43,17 @@ export default {
       selectedFile: null,
       previewImageUrl: null,
       processedImageUrl: null,
+      weightFile: null,
+      currentMode: 'image',
+      previewVideoUrl: null,
+      processedVideoUrl: null,
+      videoProcessing: false,
     };
   },
   computed: {
+    displayTitle() {
+      return this.weightFile ? this.weightFile.replace('.pt', '') : '未选择检测模型';
+    },
     originalImageStyle() {
       if (this.previewImageUrl) {
         const img = new Image();
@@ -43,7 +64,7 @@ export default {
         const containerHeight = 80 * window.innerHeight / 100;
         let scale = 1;
         if (imgWidth > containerWidth || imgHeight > containerHeight) {
-          scale = imgWidth / containerWidth > imgHeight / containerHeight? containerWidth / imgWidth : containerHeight / imgHeight;
+          scale = imgWidth / containerWidth > imgHeight / containerHeight ? containerWidth / imgWidth : containerHeight / imgHeight;
         }
         return {
           transform: `scale(${scale})`,
@@ -66,7 +87,7 @@ export default {
         const containerHeight = 80 * window.innerHeight / 100;
         let scale = 1;
         if (imgWidth > containerWidth || imgHeight > containerHeight) {
-          scale = imgWidth / containerWidth > imgHeight / containerHeight? containerWidth / imgWidth : containerHeight / imgHeight;
+          scale = imgWidth / containerWidth > imgHeight / containerHeight ? containerWidth / imgWidth : containerHeight / imgHeight;
         }
         return {
           transform: `scale(${scale})`,
@@ -80,51 +101,100 @@ export default {
       return {};
     },
   },
+  created() {
+    this.weightFile = this.$route.query.weight_file;
+  },
   methods: {
     onFileChange(event) {
-      this.selectedFile = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.previewImageUrl = e.target.result;
-      };
-      reader.readAsDataURL(this.selectedFile);
+      const file = event.target.files[0];
+      if (file) {
+        this.selectedFile = file;
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.previewImageUrl = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        } else if (file.type.startsWith('video/')) {
+          this.previewVideoUrl = URL.createObjectURL(file);
+        }
+      } else {
+        alert("请选择一个文件！");
+      }
     },
-    submitImage() {
-      if (!this.previewImageUrl) {
-        alert('请先选择一张图片进行提交。');
+    async submitMedia() {
+      if (!this.previewImageUrl && !this.previewVideoUrl) {
+        alert('请先选择一张图片或视频进行提交。');
         return;
       }
-      alert('已提交。\n现在先用原图做测试。');
-      // 模拟提交后在右侧显示图片
-      this.processedImageUrl = this.previewImageUrl;
+      if (!this.weightFile) {
+        alert('未选择检测模型。');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("weight_file", this.weightFile);
+      formData.append("source", this.selectedFile);
+
+      try {
+        this.videoProcessing = this.currentMode === 'video';
+        const response = await fetch("http://localhost:5000/detect", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        if (data.result) {
+          if (this.currentMode === 'image') {
+            this.processedImageUrl = `data:image/png;base64,${data.result}`;
+          } else if (this.currentMode === 'video') {
+            this.processedVideoUrl = `data:video/mp4;base64,${data.result}`;
+          }
+        } else {
+          alert("检测失败：" + data.error);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("请检查后端连接。");
+      } finally {
+        this.videoProcessing = false;
+      }
     },
-    clearSelectedImage() {
+
+    clearSelectedMedia() {
       this.selectedFile = null;
       this.previewImageUrl = null;
+      this.previewVideoUrl = null;
+      this.processedImageUrl = null;
+      this.processedVideoUrl = null;
     },
     triggerFileInput() {
-      document.querySelector('input[type="file"]').click();
-    },
-    showProcessDemoMessage() {
-      alert('流程演示暂未开发');
+      this.$refs.fileInput.click();
     },
     showHistoryMessage() {
       alert('历史记录暂未开发');
     },
     showModeSwitchMessage() {
-      alert('切换模式暂未开发');
+      this.currentMode = this.currentMode === 'image' ? 'video' : 'image';
     },
-    saveProcessedImage() {
-      if (!this.processedImageUrl) {
-        alert('没有处理后的图片可保存。');
+    showProcessDemoMessage() {
+      alert('流程演示暂未开发');
+    },
+    saveProcessedMedia() {
+      if (!this.processedImageUrl && !this.processedVideoUrl) {
+        alert('没有处理后的图片或视频可保存。');
         return;
       }
       const link = document.createElement('a');
-      link.href = this.processedImageUrl;
-      link.download = 'processed_image.png';
+      if (this.currentMode === 'image') {
+        link.href = this.processedImageUrl;
+        link.download = 'processed_image.png';
+      } else if (this.currentMode === 'video') {
+        link.href = this.processedVideoUrl;
+        link.download = 'processed_video.mp4';
+      }
       link.click();
     }
-  },
+  }
 };
 </script>
 
@@ -147,7 +217,12 @@ button {
   color: white;
   cursor: pointer;
 }
-.image-container {
+.image-media-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.video-media-container {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
@@ -155,6 +230,31 @@ button {
 .original-image,
 .processed-image {
   position: relative;
-  margin-right: 3vw;
+  marginRight: 3vw;
+}
+.original-video,
+.processed-video {
+  position: relative;
+  marginRight: 3vw;
+}
+/* 视频容器样式修改 */
+.original-video video,
+.processed-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 确保视频按比例缩放且不超出容器 */
+}
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 18px;
 }
 </style>
