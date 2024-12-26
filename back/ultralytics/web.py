@@ -7,7 +7,7 @@ from flask_cors import CORS
 from ultralytics import YOLO
 import base64
 
-app = Flask(__name__)
+app = Flask(__name__)  # 满足跨域措施
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 WEIGHTS_DIR = 'PtSource'
