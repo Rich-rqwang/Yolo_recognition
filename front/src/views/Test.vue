@@ -11,6 +11,7 @@
       <button @click="showProcessDemoMessage">流程演示</button>
       <button @click="saveProcessedMedia">{{ currentMode === 'image'? '保存图片' : '保存视频' }}</button>
     </div>
+    <!-- 添加一个div用于设置按钮与媒体框之间的间距 -->
     <div style="margin-top: 20px;"></div>
     <div v-if="currentMode === 'image'" class="image-media-container">
       <div class="original-image" :style="{ width: '80vw', height: '70vh', marginLeft: '5vw', backgroundColor: '#eee', border: '5px solid black', borderRadius: '10px' }">
@@ -20,6 +21,7 @@
         <img v-if="processedImageUrl" :src="processedImageUrl" alt="Processed Image" :style="processedImageStyle">
       </div>
     </div>
+    <!-- 添加一个div用于设置两个媒体框之间的间距 -->
     <div v-if="currentMode === 'video'" style="margin-top: 20px;"></div>
     <div v-if="currentMode === 'video'" class="video-media-container">
       <div class="original-video" :style="{ width: '40vw', height: '35vh', marginLeft: '5vw', backgroundColor: '#eee', border: '5px solid black', borderRadius: '10px' }">
@@ -27,12 +29,9 @@
       </div>
       <div class="processed-video" :style="{ width: '40vw', height: '35vh', marginRight: '5vw', backgroundColor: '#ddd', border: '5px solid black', borderRadius: '10px' }">
         <video v-if="processedVideoUrl" :src="processedVideoUrl" controls></video>
-        <div v-if="videoProcessing" class="loading-overlay">
-          <p>视频处理中，请稍候...</p>
-        </div>
       </div>
-    </div> <!-- <-- 这里添加了缺失的闭合 div -->
-  </div> <!-- <-- 这里添加了缺失的闭合 div -->
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,13 +45,13 @@ export default {
       weightFile: null,
       currentMode: 'image',
       previewVideoUrl: null,
-      processedVideoUrl: null,
-      videoProcessing: false,
+      processedVideoUrl: null
     };
   },
   computed: {
     displayTitle() {
-      return this.weightFile ? this.weightFile.replace('.pt', '') : '未选择检测模型';
+      // 如果 weightFile 存在，则去掉扩展名并返回友好名称
+      return this.weightFile? this.weightFile.replace('.pt', '') : '未选择检测模型';
     },
     originalImageStyle() {
       if (this.previewImageUrl) {
@@ -64,7 +63,7 @@ export default {
         const containerHeight = 80 * window.innerHeight / 100;
         let scale = 1;
         if (imgWidth > containerWidth || imgHeight > containerHeight) {
-          scale = imgWidth / containerWidth > imgHeight / containerHeight ? containerWidth / imgWidth : containerHeight / imgHeight;
+          scale = imgWidth / containerWidth > imgHeight / containerHeight? containerWidth / imgWidth : containerHeight / imgHeight;
         }
         return {
           transform: `scale(${scale})`,
@@ -87,7 +86,7 @@ export default {
         const containerHeight = 80 * window.innerHeight / 100;
         let scale = 1;
         if (imgWidth > containerWidth || imgHeight > containerHeight) {
-          scale = imgWidth / containerWidth > imgHeight / containerHeight ? containerWidth / imgWidth : containerHeight / imgHeight;
+          scale = imgWidth / containerWidth > imgHeight / containerHeight? containerWidth / imgWidth : containerHeight / imgHeight;
         }
         return {
           transform: `scale(${scale})`,
@@ -102,6 +101,7 @@ export default {
     },
   },
   created() {
+    // 从路由参数中获取权重文件名称
     this.weightFile = this.$route.query.weight_file;
   },
   methods: {
@@ -123,7 +123,7 @@ export default {
       }
     },
     async submitMedia() {
-      if (!this.previewImageUrl && !this.previewVideoUrl) {
+      if (!this.previewImageUrl &&!this.previewVideoUrl) {
         alert('请先选择一张图片或视频进行提交。');
         return;
       }
@@ -134,10 +134,13 @@ export default {
 
       const formData = new FormData();
       formData.append("weight_file", this.weightFile);
-      formData.append("source", this.selectedFile);
+      if (this.currentMode === 'image') {
+        formData.append("source", this.selectedFile);
+      } else if (this.currentMode === 'video') {
+        formData.append("source", this.selectedFile);
+      }
 
       try {
-        this.videoProcessing = this.currentMode === 'video';
         const response = await fetch("http://localhost:5000/detect", {
           method: "POST",
           body: formData,
@@ -155,11 +158,8 @@ export default {
       } catch (error) {
         console.error("Error:", error);
         alert("请检查后端连接。");
-      } finally {
-        this.videoProcessing = false;
       }
     },
-
     clearSelectedMedia() {
       this.selectedFile = null;
       this.previewImageUrl = null;
@@ -174,13 +174,13 @@ export default {
       alert('历史记录暂未开发');
     },
     showModeSwitchMessage() {
-      this.currentMode = this.currentMode === 'image' ? 'video' : 'image';
+      this.currentMode = this.currentMode === 'image'? 'video' : 'image';
     },
     showProcessDemoMessage() {
       alert('流程演示暂未开发');
     },
     saveProcessedMedia() {
-      if (!this.processedImageUrl && !this.processedVideoUrl) {
+      if (!this.processedImageUrl &&!this.processedVideoUrl) {
         alert('没有处理后的图片或视频可保存。');
         return;
       }
@@ -243,18 +243,5 @@ button {
   width: 100%;
   height: 100%;
   object-fit: contain; /* 确保视频按比例缩放且不超出容器 */
-}
-.loading-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 18px;
 }
 </style>
