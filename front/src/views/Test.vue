@@ -173,12 +173,14 @@ export default {
     showHistoryMessage() {
       alert('历史记录暂未开发');
     },
+    // 增加了模式切换功能
     showModeSwitchMessage() {
       this.currentMode = this.currentMode === 'image'? 'video' : 'image';
     },
     showProcessDemoMessage() {
       alert('流程演示暂未开发');
     },
+    // 修改了保存的逻辑
     saveProcessedMedia() {
       if (!this.processedImageUrl &&!this.processedVideoUrl) {
         alert('没有处理后的图片或视频可保存。');
