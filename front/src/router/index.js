@@ -4,10 +4,12 @@ import ProjectIntro from '../views/ProjectIntro.vue';
 import ProductMarket from '../views/ProductMarket.vue';
 import About from '../views/About.vue';
 import Test from '../views/Test.vue';
+import DroneStream from '../views/DroneStream.vue'; // 新增的无人机实时识别组件
+import AiAnalysis from '../views/AiAnalysis.vue'; // 新增的AI分析页面组件
 
 const routes = [
   {
-    path: '/Home',
+    path: '/home',
     name: 'home',
     component: Home
   },
@@ -22,13 +24,24 @@ const routes = [
     component: ProductMarket
   },
   {
-    path: '/About',
+    path: '/about',
     name: 'about',
     component: About
-  },{
+  },
+  {
     path: '/test',
     name: 'test',
     component: Test
+  },
+  {
+    path: '/drone-stream', // 新增的路由
+    name: 'droneStream',
+    component: DroneStream
+  },
+  {
+    path: '/ai-analysis', // 新增的路由
+    name: 'aiAnalysis',
+    component: AiAnalysis
   }
 ];
 
