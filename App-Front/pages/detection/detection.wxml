@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="header">
+    <view class="header-title">Yolo Recognition</view>
+  </view>
+  <view class="content" style="margin-top:-140px;">
+    <view class="preview-container" wx:if="{{fileUrl}}">
+      <image wx:if="{{!isVideo}}" src="{{fileUrl}}" mode="aspectFit" class="preview-media" />
+      <video wx:if="{{isVideo}}" src="{{fileUrl}}" class="preview-media" />
+    </view>
+  </view>
+  <view class="upload-buttons">
+    <view class="upload-button" bindtap="uploadImage">
+      <text class="button-text">Upload Image</text>
+    </view>
+    <view class="upload-button" bindtap="uploadVideo">
+      <text class="button-text">Upload Video</text>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="form">
+    <view class="form-group">
+      <text class="label">反馈类型</text>
+      <radio-group class="radio-group" bindchange="handleFeedbackTypeChange">
+        <label class="radio-label">
+          <radio value="suggestion" checked="{{feedbackType === 'suggestion'}}" />建议
+        </label>
+        <label class="radio-label">
+          <radio value="bug" checked="{{feedbackType === 'bug'}}" />问题报告
+        </label>
+        <label class="radio-label">
+          <radio value="other" checked="{{feedbackType === 'other'}}" />其他
+        </label>
+      </radio-group>
+    </view>
+    
+    <view class="form-group">
+      <text class="label">标题</text>
+      <input class="input" placeholder="请输入反馈标题" bindinput="handleInputChange" data-field="title" value="{{title}}" />
+    </view>
+    
+    <view class="form-group">
+      <text class="label">详细描述</text>
+      <textarea class="textarea" placeholder="{{feedbackType === 'suggestion' ? '请详细描述您的建议...' : feedbackType === 'bug' ? '请描述您遇到的问题，以及重现步骤...' : '请详细描述您的反馈...'}}" bindinput="handleInputChange" data-field="description" value="{{description}}" />
+    </view>
+    
+    <view class="form-group">
+      <text class="label">联系邮箱（选填）</text>
+      <input class="input" type="email" placeholder="your@email.com" bindinput="handleInputChange" data-field="email" value="{{email}}" />
+    </view>
+    
+    <button class="btn-submit" bindtap="handleSubmit">提交反馈</button>
+  </view>
+</view>

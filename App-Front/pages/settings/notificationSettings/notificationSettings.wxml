@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="section">
+    <text class="section-title">通知类型</text>
+    <view class="notification-list">
+      <view class="notification-item" wx:for="{{notifications}}" wx:key="type">
+        <text>{{item.label}}</text>
+        <switch checked="{{item.enabled}}" bindchange="toggleNotification" data-index="{{index}}" />
+      </view>
+    </view>
+  </view>
+  
+  <view class="section">
+    <text class="section-title">通知频率</text>
+    <radio-group class="frequency-group" bindchange="handleFrequencyChange">
+      <label class="frequency-item">
+        <radio value="everything" checked="{{frequency === 'everything'}}" />所有新通知
+      </label>
+      <label class="frequency-item">
+        <radio value="daily" checked="{{frequency === 'daily'}}" />每日摘要
+      </label>
+      <label class="frequency-item">
+        <radio value="off" checked="{{frequency === 'off'}}" />关闭所有通知
+      </label>
+    </radio-group>
+  </view>
+  <button class="btn-save" bindtap="handleSave">保存设置</button>
+</view>

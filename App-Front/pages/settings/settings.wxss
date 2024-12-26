@@ -1,0 +1,104 @@
+.settings-container {
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  position: relative;
+}
+
+.background-image {
+  height: 200px;
+  width: 100%;
+  position: relative;
+}
+
+.background-image image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-section {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:-50px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.avatar image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.avatar-edit-icon {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 24px;
+  height: 24px;
+  background-color: #007AFF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-edit-icon .iconfont {
+  color: #fff;
+  font-size: 14px;
+}
+
+.user-info {
+  font-size: 16px;
+  color: #000;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.menu-list {
+  background-color: #f7f7f7;
+  padding: 20px;
+}
+
+.menu-item {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.arrow {
+  color: #999;
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-edit:before {
+  content: "\e602";
+}

@@ -1,0 +1,118 @@
+/* 基本布局 */
+.container {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.background-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.03;
+  background: 
+    linear-gradient(30deg, rgb(100, 100, 100) 12%, transparent 12.5%, transparent 87%, rgb(100, 100, 100) 87.5%, rgb(100, 100, 100)) 0 0,
+    linear-gradient(150deg, #000 12%, transparent 12.5%, transparent 87%, rgb(100, 100, 100) 87.5%, #000) 0 0,
+    linear-gradient(30deg, rgb(100, 100, 100) 12%, transparent 12.5%, transparent 87%, rgb(100, 100, 100) 87.5%, #000) 48px 48px,
+    linear-gradient(150deg, #000 12%, transparent 12.5%, transparent 87%, rgb(100, 100, 100) 87.5%, #000) 48px 48px;
+  background-size: 80px 80px;
+  background-color: #ffffff;
+  animation: fadeIn 2s ease-out;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  animation: slideUp 1.5s ease-out;
+}
+
+.logo {
+  width: 180rpx;
+  height: 180rpx;
+  margin-bottom: 40rpx;
+  border-radius: 50%;
+  background: #000;
+}
+
+.brand {
+  text-align: center;
+}
+
+/* 使用 @font-face 引入本地字体文件 */
+@font-face {
+  font-family: 'Poppins';
+  src: url('../../assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+/* 修改字体为圆润并增大 */
+.brand-name {
+  display: block;
+  font-size: 60rpx; /* 增加字体大小 */
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 20rpx;
+  letter-spacing: 2rpx;
+  font-family: 'Poppins'; /* 使用圆润的字体 */
+}
+
+.brand-slogan {
+  display: block;
+  font-size: 30rpx;
+  color: #666666;
+  letter-spacing: 8rpx;
+}
+
+.action-button {
+  position: relative;
+  margin-top: 80rpx;
+  padding: 24rpx 60rpx;
+  background: linear-gradient(to right, #4a4a4a, #9a9a9a);
+  color: #ffffff;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  animation: fadeIn 2s ease-out 0.5s backwards;
+  transition: all 0.3s ease;
+}
+
+.action-button:active {
+  opacity: 0.9;
+}
+
+.arrow {
+  font-size: 28rpx;
+  transition: transform 0.3s ease;
+}
+
+.action-button:active .arrow {
+  transform: translateX(6rpx);
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="header">
+    <text class="header-title">YOLO Recognition Models</text>
+    <text class="header-subtitle">探索智能识别的无限可能</text>
+  </view>
+
+  <view class="models-grid">
+    <view class="model-card {{item.animationClass}}" 
+          wx:for="{{models}}" 
+          wx:key="id"
+          bindtap="onModelTap"
+          data-id="{{item.id}}">
+      <view class="card-content">
+        <view class="icon-wrapper">
+          <image class="model-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        </view>
+        <view class="model-info">
+          <text class="model-name">{{item.name}}</text>
+          <text class="model-description">{{item.description}}</text>
+        </view>
+        <view class="card-footer">
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

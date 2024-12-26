@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="account-list">
+    <view class="account-item" wx:for="{{accounts}}" wx:key="name">
+      <view class="account-info">
+        <image class="account-icon" src="/icons/{{item.icon}}.png" />
+        <text class="account-name">{{item.name}}</text>
+      </view>
+      <button class="btn-binding {{item.bound ? 'btn-unbind' : 'btn-bind'}}" bindtap="handleBinding" data-index="{{index}}">
+        {{item.bound ? '解绑' : '绑定'}}
+      </button>
+    </view>
+  </view>
+  
+  <button class="btn-save" bindtap="handleSave">保存更改</button>
+</view>

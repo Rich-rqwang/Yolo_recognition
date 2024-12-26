@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="version-info">
+    <view class="version-item">
+      <text class="version-label">当前版本</text>
+      <text class="version-number">{{currentVersion}}</text>
+  
+    <view class="version-item">
+      <text class="version-label">最新版本</text>
+      <text class="version-number">{{latestVersion}}</text>
+    </view>
+  </view>
+  <button class="btn-update" bindtap="handleUpdate" disabled="{{!updateAvailable}}">
+    {{updateAvailable ? '更新到最新版本' : '已是最新版本'}}
+  </button>
+</view>
+</view>

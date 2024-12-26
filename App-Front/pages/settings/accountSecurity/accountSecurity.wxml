@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="section">
+    <text class="section-title">修改密码</text>
+    <view class="form-group">
+      <text class="label">当前密码</text>
+      <input class="input" type="password" placeholder="输入当前密码" bindinput="handleInputChange" data-field="currentPassword" value="{{currentPassword}}" />
+    </view>
+    <view class="form-group">
+      <text class="label">新密码</text>
+      <input class="input" type="password" placeholder="输入新密码" bindinput="handleInputChange" data-field="newPassword" value="{{newPassword}}" />
+    </view>
+    <view class="form-group">
+      <text class="label">确认新密码</text>
+      <input class="input" type="password" placeholder="再次输入新密码" bindinput="handleInputChange" data-field="confirmPassword" value="{{confirmPassword}}" />
+    </view>
+    <button class="btn" bindtap="handleUpdatePassword">更新密码</button>
+  </view>
+  
+  <view class="section">
+    <text class="section-title">两步验证</text>
+    <view class="switch-container">
+      <text>启用两步验证</text>
+      <switch checked="{{twoFactorEnabled}}" bindchange="handleTwoFactorSwitch" />
+    </view>
+  </view>
+  
+  <view class="section">
+    <text class="section-title">登录活动</text>
+    <button class="btn btn-outline" bindtap="handleViewLoginHistory">查看登录历史</button>
+  </view>
+</view>

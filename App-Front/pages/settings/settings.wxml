@@ -1,0 +1,27 @@
+<view class="settings-container">
+  <view class="background-image">
+    <image src="/figures/background.png"></image>
+  </view>
+  
+  <view class="profile-section">
+    <view class="avatar-container">
+      <view class="avatar" bindtap="chooseImage">
+        <image src="{{avatarUrl}}" mode="aspectFill"></image>
+        <view class="avatar-edit-icon">
+          <text class="iconfont icon-edit"></text>
+        </view>
+      </view>
+      <view class="user-info">
+        <text>{{userName}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="menu-list">
+    <view class="menu-item" wx:for="{{menuItems}}" wx:key="index" bindtap="navigateToPage" data-page="{{item.page}}">
+      <text>{{item.title}}</text>
+      <text class="arrow">></text>
+    </view>
+  </view>
+</view>
+

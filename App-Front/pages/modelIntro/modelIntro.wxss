@@ -1,0 +1,145 @@
+.container {
+  min-height: 100vh;
+  padding: 40rpx;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.header {
+  margin-bottom: 60rpx;
+  text-align: center;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.header-title {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 16rpx;
+  letter-spacing: 2rpx;
+  display: block;
+}
+
+.header-subtitle {
+  font-size: 28rpx;
+  color: #666;
+  letter-spacing: 4rpx;
+}
+
+.models-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 30rpx;
+  padding: 20rpx 0;
+  margin-top: -20px;
+}
+
+.model-card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20rpx);
+}
+
+.model-card.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-content {
+  padding: 40rpx;
+}
+
+.icon-wrapper {
+  width: 120rpx;
+  height: 120rpx;
+  background: #ffffff; /* 确保背景与卡片一致 */
+  border-radius: 24rpx; /* 一致的圆角 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  overflow: hidden; /* 防止子元素溢出 */
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.model-icon {
+  width: 100%; /* 充满父容器 */
+  height: 100%;
+  display: block; /* 去除默认空白 */
+  object-fit: cover; /* 填满并保持比例 */
+}
+
+
+
+.model-info {
+  margin-bottom: 30rpx;
+}
+
+.model-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.model-description {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 30rpx;
+  border-top: 2rpx solid rgba(0, 0, 0, 0.05);
+}
+
+.learn-more {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.arrow {
+  font-size: 26rpx;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.model-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.03);
+}
+
+.model-card:active .arrow {
+  transform: translateX(10rpx);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

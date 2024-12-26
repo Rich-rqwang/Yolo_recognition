@@ -1,0 +1,49 @@
+<view class="container">
+  
+  <view class="contact-info">
+    <view class="info-item">
+      <image class="icon" src="/icons/电话.png" />
+      <text>+86 15322554632</text>
+    </view>
+    <view class="info-item">
+      <image class="icon" src="/icons/邮件.png" />
+      <text>2004hylin@gmail.com</text>
+    </view>
+    <view class="info-item">
+      <image class="icon" src="/icons/地球.png" />
+      <text>中国，汕头，澄海区，汕头大学东海岸</text>
+    </view>
+  </view>
+  
+  <view class="form">
+    <view class="form-group">
+      <text class="label">姓名</text>
+      <input class="input" placeholder="请输入您的姓名" bindinput="handleInputChange" data-field="name" value="{{name}}" />
+    </view>
+    
+    <view class="form-group">
+      <text class="label">邮箱</text>
+      <input class="input" type="email" placeholder="your@email.com" bindinput="handleInputChange" data-field="email" value="{{email}}" />
+    </view>
+    
+    <view class="form-group">
+      <text class="label">消息</text>
+      <textarea class="textarea" placeholder="请输入您的消息" bindinput="handleInputChange" data-field="message" value="{{message}}" />
+    </view>
+    
+    <button class="btn-submit" bindtap="handleSubmit">发送消息</button>
+  </view>
+  
+  <view class="faq">
+    <text class="faq-title">常见问题</text>
+    <view class="faq-item">
+      <text class="faq-link">如何重置密码？</text>
+    </view>
+    <view class="faq-item">
+      <text class="faq-link">如何取消订阅？</text>
+    </view>
+    <view class="faq-item">
+      <text class="faq-link">如何更新个人信息？</text>
+    </view>
+  </view>
+</view>

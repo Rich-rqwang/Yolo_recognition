@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="grid">
+    <view class="grid-item" 
+          wx:for="{{detectionItems}}" 
+          wx:key="id" 
+          bindtap="navigateToFeature" 
+          data-id="{{item.id}}">
+      <image src="{{item.image}}" mode="aspectFill"></image>
+      <text>{{item.title}}</text>
+    </view>
+  </view>
+</view>
+

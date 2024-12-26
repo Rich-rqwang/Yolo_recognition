@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="background-pattern"></view>
+  
+  <view class="content">
+    <image class="logo" src="../../icons/logo.png" mode="aspectFit"></image>
+    <view class="brand">
+      <text class="brand-name">YOLO Recognition</text>
+      <text class="brand-slogan">智能识别 · 智慧未来</text>
+    </view>
+  </view>
+
+  <view class="action-button" bindtap="navigateToRecognition">
+    <text>开始体验</text>
+    <text class="arrow">→</text>
+  </view>
+</view>

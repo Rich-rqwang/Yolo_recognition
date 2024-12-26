@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/welcome/index",
+    "pages/recognition/recognition",
+    "pages/modelIntro/modelIntro",
+    "pages/settings/settings",
+    "pages/settings/personalInfo/personalInfo",
+    "pages/settings/accountSecurity/accountSecurity",
+    "pages/settings/accountBinding/accountBinding",
+    "pages/settings/notificationSettings/notificationSettings",
+    "pages/settings/userFeedback/userFeedback",
+    "pages/settings/versionUpdate/versionUpdate",
+    "pages/settings/contactUs/contactUs",
+    "pages/detection/detection"
+  ],
+  "window": {
+    "navigationBarTitleText": "Recognition Part",
+    "navigationBarBackgroundColor": "#FFFFFF", 
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "default"
+  },
+
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/welcome/index",
+        "text": "首页",
+        "iconPath": "icons/home.png",
+        "selectedIconPath": "icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/recognition/recognition",
+        "text": "识别",
+        "iconPath": "icons/recognition.png",
+        "selectedIconPath": "icons/recognition-active.png"
+      },
+      {
+        "pagePath": "pages/modelIntro/modelIntro",
+        "text": "项目介绍",
+        "iconPath": "icons/中心介绍.png",
+        "selectedIconPath": "icons/中心介绍-active.png"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置",
+        "iconPath": "icons/settings.png",
+        "selectedIconPath": "icons/settings-active.png"
+      }
+    ],
+    "color": "#7A7E83",
+    "selectedColor": "#007AFF",
+    "backgroundColor": "#FAFAFA",
+    "borderStyle": "white"
+  },
+  "usingComponents": { },
+  "lazyCodeLoading":"requiredComponents"
+}

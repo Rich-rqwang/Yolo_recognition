@@ -1,0 +1,15 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+gradient-background {
+  /* 定义一个蓝色的渐变背景 */
+  background-image: linear-gradient(to bottom, #007AFF, #0055D4);
+}
+

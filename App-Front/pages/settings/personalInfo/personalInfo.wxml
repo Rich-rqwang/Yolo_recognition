@@ -1,0 +1,33 @@
+<view class="container">
+<view class="section">
+  <view class="form-group">
+    <text class="label">用户名</text>
+    <input class="input" placeholder="输入您的用户名" bindinput="handleInputChange" data-field="username" value="{{username}}" />
+  </view>
+  
+  <view class="form-group">
+    <text class="label">性别</text>
+    <radio-group class="radio-group" bindchange="handleGenderChange">
+      <label class="radio"><radio value="female" checked="{{gender === 'female'}}"/>女</label>
+      <label class="radio"><radio value="male" checked="{{gender === 'male'}}"/>男</label>
+      <label class="radio"><radio value="other" checked="{{gender === 'other'}}"/>其他</label>
+    </radio-group>
+  </view>
+  
+  <view class="form-group">
+    <text class="label">生日</text>
+    <picker mode="date" bindchange="handleDateChange" value="{{birthday}}">
+      <view class="picker">
+        {{birthday || '选择日期'}}
+      </view>
+    </picker>
+  </view>
+  
+  <view class="form-group">
+    <text class="label">身份证号</text>
+    <input class="input" placeholder="输入您的身份证号" bindinput="handleInputChange" data-field="idNumber" value="{{idNumber}}" />
+  </view>
+  
+  <button class="submit-btn" bindtap="handleSubmit">保存更改</button>
+</view>
+</view>
