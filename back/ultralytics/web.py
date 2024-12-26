@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from ultralytics import YOLO
 import base64
-
+#缺少添加AI功能
 app = Flask(__name__)  # 满足跨域措施
 CORS(app, resources={r"/*": {"origins": "*"}})
 
