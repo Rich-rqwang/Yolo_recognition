@@ -2,8 +2,9 @@
   <div class="page-container">
     <!-- 顶部全屏背景区域 -->
     <div class="hero-section">
+      <div class="hero-overlay"></div> <!-- 添加黑色纱布遮罩层 -->
       <div class="hero-content">
-        <h1>「AI图像识别」</h1>
+        <h1>慧眸科技</h1>
         <p>智慧视觉助力生活，连接技术与未来。</p>
         <div class="scroll-down" @click="scrollToCards">
           <span class="arrow">↓</span>
@@ -11,25 +12,27 @@
       </div>
     </div>
 
-    <!-- 第二屏：横向卡片区域 -->
-    <div class="cards-section" ref="cards">
-      <div class="cards-container">
-        <div class="card" v-for="(item, index) in modules" :key="index">
-          <h2>{{ item.title }}</h2>
-          <p>{{ item.description }}</p>
+     <!-- 第二屏：显示两张图片区域 -->
+     <div class="image-section" ref="cards">
+      <div class="image-container">
+        <div class="image-card">
+          <!-- 使用相对路径的图片 -->
+          <img src="@/assets/01.jpg" alt="Image 1" />
+          <p class="image-description">Unveiling the unseen with intelligent vision</p>
         </div>
-      </div>
-      <div class="scroll-next" @click="scrollToNextPage">
-        <span class="arrow">↓</span>
+        <div class="image-card">
+          <img src="@/assets/02.jpg" alt="Image 2" />
+          <p class="image-description">Sharpening the lens of AI to clarify the world</p>
+        </div>
       </div>
     </div>
 
     <!-- 第三屏 -->
     <div class="next-section" ref="nextPage">
-      <h1>快来看看我们可以做些什么</h1>
+      <h1>Let's see what we can accomplish!</h1>
       <div class="dialog-box">
         <div class="dialog-header">
-          <h2>正在与系统对话中</h2>
+          <h2>"Currently in conversation with the system..."</h2>
         </div>
         <div class="dialog-content">
           <p
@@ -41,7 +44,6 @@
           </p>
         </div>
       </div>
-      <!-- 添加金色按钮 -->
       <button class="try-button" @click="onTryClick">点击试用</button>
     </div>
   </div>
@@ -52,22 +54,14 @@ export default {
   name: "HomePage",
   data() {
     return {
-      modules: [
-        { title: "烟雾识别", description: "快速定位火灾源头，保护生命财产安全。" },
-        { title: "火焰识别", description: "精准识别火焰形态，用于早期火灾报警。" },
-        { title: "人员落水识别", description: "保障水域安全，第一时间监测异常。" },
-        { title: "河道漂浮物识别", description: "清理垃圾，保护生态环境。" },
-        { title: "闯红灯识别", description: "提高交通秩序，构建安全城市。" },
-        { title: "无人机连接", description: "协助灾害监测与应急响应，覆盖全局场景。" },
-      ],
       visibleMessages: [],
       currentMessageIndex: 0, // 当前显示的对话内容索引
       dialogMessages: [
-        { sender: "系统", text: "欢迎使用AI图像识别系统！" },
-        { sender: "用户", text: "这个系统可以做什么？" },
-        { sender: "系统", text: "它可以识别烟雾、火焰、人员落水等场景。" },
+        { sender: "AI", text: "欢迎使用慧眸科技！" },
+        { sender: "用户", text: "这个系统可以做什么呢？" },
+        { sender: "AI", text: "它可以识别烟雾、火焰、人员落水等场景，用处可大了！" },
         { sender: "用户", text: "听起来很棒，我可以试试吗？" },
-        { sender: "系统", text: "当然可以，请上传相关图片或视频进行分析！" },
+        { sender: "AI", text: "当然可以，请点击开启试用吧！" },
       ],
     };
   },
@@ -111,8 +105,8 @@ export default {
 /* 页面容器样式 */
 .page-container {
   font-family: 'Open Sans', sans-serif;
-  color: #fff; /* 全局字体颜色为偏白 */
   scroll-behavior: smooth;
+  background-color: #000000;
 }
 
 /* 第一屏背景 */
@@ -123,36 +117,54 @@ export default {
   align-items: center;
   justify-content: center;
   position: relative;
-  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-  z-index: 1;
+}
+
+/* 黑色纱布遮罩层样式 */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* 半透明黑色 */
+  z-index: 1; /* 确保它在图片下方，文本上方 */
 }
 
 .hero-content {
   text-align: center;
-  color: white;
   background: rgba(0, 0, 0, 0.6);
-  padding: 20px 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  padding: 40px 100px;
+  z-index: 2; /* 确保内容在遮罩层上方 */
+  color: transparent; /* 设置文本颜色为透明，以便只显示背景渐变 */
+  background: linear-gradient(to right, #e66465, #9198e5); /* 设置渐变背景 */
+  -webkit-background-clip: text; /* Chrome 和 Safari */
+  background-clip: text;
 }
 
 .hero-content h1 {
-  font-size: 3.5rem;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 5.5rem;
   font-weight: bold;
-  margin-bottom: 15px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
+
 .hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 25px;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 2.5rem;
 }
 
 .scroll-down {
   margin-top: 20px;
   cursor: pointer;
   font-size: 2rem;
-  color: #FFD700;
+  background: linear-gradient(to right, #e66465, #9198e5); /* 设置渐变背景 */
+  -webkit-background-clip: text; /* Chrome 和 Safari */
+  background-clip: text;
+  color: transparent;
   animation: bounce 2s infinite;
 }
 
@@ -165,104 +177,84 @@ export default {
   }
 }
 
-/* 第二屏 */
-.cards-section {
-  background-color: #182935;
-  padding: 50px 20px;
-  text-align: center;
-  clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 90%);
-  z-index: 0;
+/* 第二屏：图片区域 */
+.image-section {
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* 图片之间的间隔 */
+}
+
+.image-card {
+  width: 500px; /* 固定宽度 */
+  height: 300px; /* 固定高度 */
   position: relative;
 }
 
-.cards-section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.image-card img {
   width: 100%;
-  height: 120px;
-  background: #14202b;
-  clip-path: ellipse(150% 90% at 50% 100%);
-  z-index: 2;
+  height: 100%;
+  object-fit: cover; /* 保持图片比例并裁切 */
 }
 
-/* 卡片容器 */
-.cards-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 30px;
-  padding: 20px;
-}
-
-/* 卡片样式 */
-.card {
-  background: linear-gradient(145deg, #284056, #182935);
-  border: 2px solid #FFD700;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  padding: 20px;
+.image-description {
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-}
-
-.card h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #FFD700;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 1rem;
-  color: #E0E0E0;
-  line-height: 1.5;
-}
-
-.scroll-next {
-  margin-top: 30px;
-  cursor: pointer;
-  font-size: 2rem;
-  color: #FFD700;
-  animation: bounce 2s infinite;
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap; /* 防止文字换行 */
+  width: auto; /* 根据文字内容自动调整宽度 */
+  max-width: 90%; /* 限制最大宽度为父容器的90% */
+  overflow: hidden; /* 防止溢出 */
+  text-overflow: ellipsis; /* 文字溢出时使用省略号 */
 }
 
 /* 第三屏 */
 .next-section {
   height: 100vh;
-  background: linear-gradient(145deg, #1e2a38, #14202b);
+  background: #000000;
   color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  font-size: 3rem;
 }
 .next-section h1 {
-  font-size: 2.5rem;
-  color: #FFD700;
+  font-size: 3rem;
+  background: linear-gradient(to right, #e66465, #9198e5); /* 设置渐变背景 */
+  -webkit-background-clip: text; /* Chrome 和 Safari */
+  background-clip: text;
+  color: transparent; /* 使文字颜色透明，以便只显示背景 */
   margin-bottom: 20px;
 }
 
 .next-section p {
   font-size: 1.2rem;
-  color: #E0E0E0;
+  color: #000000;
 }
 
 
 .dialog-box {
-  width: 60%;
+  width: 70%;
   max-width: 800px;
-  background-color: #222f3e;
-  border: 3px solid #00cec9;
-  border-radius: 15px;
+  background: linear-gradient(to right, #e66465, #9198e5);
+  border: 3px solid #000000;
+
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -270,8 +262,11 @@ export default {
 }
 
 .dialog-header {
-  background-color: #00cec9;
-  color: #222f3e;
+  font-size: 2em; /* 设置字体大小 */
+  background: #000000; /* 设置渐变背景 */
+  -webkit-background-clip: text; /* Chrome 和 Safari */
+  background-clip: text;
+  color: transparent; /* 使文字颜色透明，以便只显示背景 */
   padding: 10px 15px;
   border-radius: 10px 10px 0 0;
   text-align: left;
@@ -295,15 +290,14 @@ export default {
 }
 
 .system-message {
-  background-color:rgb(70, 138, 190);
-  color: #fff;
+  background: linear-gradient(to right, #e66465, #9198e5); /* 设置渐变背景 */
+  color: #000000;
   text-align: left;
   align-self: flex-start;
 }
 
 .user-message {
-  background-color:rgb(180, 73, 73);
-  color: #fff;
+  color: #000000;
   text-align: right;
   align-self: flex-end;
   margin-left: auto; /* 使对话框靠右 */
@@ -332,13 +326,13 @@ export default {
     transform: translateX(0);
   }
 }
-/* 金色按钮样式 */
+
 .try-button {
-  background-color: #00cec9; /* 浅色背景 */
+  background: linear-gradient(to right, #e66465, #9198e5); /* 设置渐变背景 */
   color: #222f3e; /* 深色字体 */
   font-size: 1.5rem; /* 按钮字体大小 */
   font-weight: bold; /* 字体加粗 */
-  padding: 15px 30px; /* 按钮内边距 */
+  padding: 12px 25px; /* 按钮内边距 */
   border: none; /* 无边框 */
   border-radius: 10px; /* 圆角 */
   cursor: pointer; /* 鼠标悬停效果 */

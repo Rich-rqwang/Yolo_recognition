@@ -271,61 +271,65 @@ export default {
 <style scoped>
 .page-wrapper {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #182935, #243447);
-  padding: 20px;
+  background: #000000;
+  padding: 10px;
 }
 
 .container {
   text-align: center;
-  padding: 30px;
+  padding: 25px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
+  padding-top: 5px;
+
   max-width: 95%;
 }
 
 h1 {
   font-size: 3rem;
-  color: #00cec9;
+  color: transparent;
+  background: linear-gradient(to right, #e66465, #9198e5);
+  -webkit-background-clip: text;
+  background-clip: text;
   font-weight: 700;
   margin-bottom: 20px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   font-family: 'Orbitron', sans-serif;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .button-group {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
   margin: 30px 0;
 }
 
+.button-group button {
+  flex: 0 1 auto; /* 允许按钮保持其自然大小，不填充额外空间 */
+}
+
 button {
-  padding: 15px 25px;
+  padding: 10px 25px;
   font-size: 16px;
   font-weight: bold;
   border: none;
   border-radius: 10px;
-  background-color: #00cec9;
-  color: #182935;
+  background:linear-gradient(to right, #e66465, #9198e5);
+  color: #000000;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+
   font-family: 'Open Sans', sans-serif;
+  white-space: nowrap; /* 防止文本换行 */
 }
 
 button:hover {
-  background-color: #1dd1a1;
-  transform: translateY(-3px);
-  border: 2px solid #1dd1a1;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
 }
 
 button:active {
-  transform: scale(0.95);
+  transform: scale(0.85);
   background-color: #128d76;
 }
 

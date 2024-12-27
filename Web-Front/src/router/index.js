@@ -9,6 +9,10 @@ import AiAnalysis from '../views/AiAnalysis.vue'; // 新增的AI分析页面组�
 
 const routes = [
   {
+    path: '/',
+    redirect: '/home'
+  },
+  {
     path: '/home',
     name: 'home',
     component: Home

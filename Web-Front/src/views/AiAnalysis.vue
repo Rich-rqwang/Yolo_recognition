@@ -113,11 +113,10 @@ async function getVideoFrameUrl() {
   })
 }
 </script>
-
 <style scoped>
 .page-wrapper {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #182935, #243447);
+  background: #000;
   padding: 20px;
 }
 
@@ -130,10 +129,13 @@ async function getVideoFrameUrl() {
 h1 {
   text-align: center;
   font-size: 2.5rem;
-  color: #00cec9;
+  color: transparent;
+  background: linear-gradient(to right, #e66465, #9198e5);
+  -webkit-background-clip: text;
+  background-clip: text;
   margin-bottom: 30px;
   font-weight: bold;
-  text-shadow: 0 0 10px rgba(0, 206, 201, 0.3);
+  text-shadow: 0 0 10px rgba(230, 100, 101, 0.3);
 }
 
 .content-layout {
@@ -154,7 +156,8 @@ h1 {
   min-height: 400px;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid #00cec9;
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, #e66465, #9198e5) 1;
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -169,8 +172,8 @@ h1 {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: rgba(0, 206, 201, 0.9);
-  color: #182935;
+  background: rgba(230, 100, 101, 0.9);
+  color: #000;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 14px;
@@ -193,7 +196,8 @@ textarea {
   width: 100%;
   padding: 15px;
   border-radius: 8px;
-  border: 2px solid #00cec9;
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, #e66465, #9198e5) 1;
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   font-size: 16px;
@@ -203,16 +207,16 @@ textarea {
 
 textarea:focus {
   outline: none;
-  border-color: #00fff5;
-  box-shadow: 0 0 10px rgba(0, 206, 201, 0.3);
+  border-image: linear-gradient(to right, #e66465, #9198e5) 1;
+  box-shadow: 0 0 10px rgba(230, 100, 101, 0.3);
 }
 
 .send-button {
   align-self: flex-end;
   padding: 12px 30px;
-  border-radius: 8px;
-  background: #00cec9;
-  color: #182935;
+  border-radius: 20px; /* Updated border-radius */
+  background: linear-gradient(to right, #e66465, #9198e5);
+  color: #000;
   border: none;
   font-size: 16px;
   font-weight: bold;
@@ -221,7 +225,7 @@ textarea:focus {
 }
 
 .send-button:hover {
-  background: #00fff5;
+  background: linear-gradient(to right, #f87777, #a3aaf7);
   transform: translateY(-2px);
 }
 
@@ -239,7 +243,10 @@ textarea:focus {
 }
 
 .result-container h3 {
-  color: #00cec9;
+  color: transparent;
+  background: linear-gradient(to right, #e66465, #9198e5);
+  -webkit-background-clip: text;
+  background-clip: text;
   margin-bottom: 10px;
   font-size: 18px;
 }
